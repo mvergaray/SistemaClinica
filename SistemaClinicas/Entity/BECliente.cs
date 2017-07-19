@@ -16,6 +16,7 @@ namespace Entity
         public DateTime fecha_nacimiento { get; set; }
         public string tipo_documento { get; set; }
         public string num_documento { get; set; }
+        public string nombreCompleto { get; set; }
         public BECliente()
         {
 

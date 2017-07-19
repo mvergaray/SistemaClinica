@@ -99,7 +99,7 @@ namespace DAO
             return result;
         }
 
-        public List<BEOrden> BuscarOrden(int tipo, string nombre = "", string num_doc = "", string area = "", string responsable = "", Nullable<DateTime> fecha = null)
+        public List<BEOrden> BuscarOrden(int tipo, string nombre = "", string num_doc = "", string area = "", string responsable = "", string fecha = "")
         {
             List<BEOrden> result = new List<BEOrden>();
 
@@ -126,7 +126,22 @@ namespace DAO
             {
                 BEOrden item = new BEOrden();
                 item.id = (!reader[0].Equals(DBNull.Value)) ? reader.GetInt32(0) : -1;
-
+                item.codigo = (!reader[1].Equals(DBNull.Value)) ? reader.GetString(1) : "-";
+                item.fecha = reader.GetDateTime(2);
+                item.estado = (!reader[3].Equals(DBNull.Value)) ? reader.GetString(3) : "-";
+                if (tipo == 1)
+                {
+                    item.cliente = clienteDAO.GetClientexId((!reader[4].Equals(DBNull.Value)) ? reader.GetInt32(4) : -1);
+                    item.cliente.nombreCompleto = item.cliente.nombres + " " + item.cliente.apellidos;
+                }
+                else
+                {
+                    item.encargado = empleadoDAO.GetEmpleadoxId((!reader[4].Equals(DBNull.Value)) ? reader.GetInt32(4) : -1);
+                    item.encargado.nombreCompleto = item.encargado.nombre + " " + item.encargado.apellidos;
+                    item.area = areaDAO.GetAreaxId((!reader[6].Equals(DBNull.Value)) ? reader.GetInt32(6) : -1);
+                }
+                
+                result.Add(item);
             }
 
             return result;

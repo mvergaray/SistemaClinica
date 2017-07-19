@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-6 col-sm-2">
-                                        <button type="submit" class="btn btn-default">Buscar Orden</button>
+                                        <asp:Button type="submit" CssClass="btn btn-default" Text="Buscar Orden" runat="server" ID="btnMostrarBusqueda" OnClick="btnMostrarBusqueda_Click"/>
                                     </div>
                                 </div>
                                 <div id="infoPanel" runat="server">
@@ -110,23 +110,61 @@
                                     </div>
                                 </div>
 
-                                <div id="buscarOrdenPanel" runat="server" visible="false">
+                                <div id="buscarAbastecimientoPanel" runat="server">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">DNI Cliente:</label>
+                                        <label class="col-sm-2 control-label">Área:</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox  CssClass="form-control" id="TextBox1" runat="server" placeholder="DNI Cliente" ></asp:TextBox>
+                                            <asp:TextBox  CssClass="form-control" id="txtArea" runat="server" placeholder="Área" ></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Nombre Cliente:</label>
+                                        <label class="col-sm-2 control-label">Nombre Encargado:</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox CssClass="form-control" id="TextBox2" runat="server" placeholder="Nombre Cliente" ></asp:TextBox>
+                                            <asp:TextBox CssClass="form-control" id="txtEncargado" runat="server" placeholder="Nombre Encargado" ></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Fecha:</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox CssClass="form-control" id="TextBox3" runat="server" placeholder="Fecha" ></asp:TextBox>
+                                            <asp:TextBox CssClass="form-control datepicker" id="txtFecha2" runat="server" placeholder="Fecha" ></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-6 col-sm-2">
+                                            <asp:Button type="submit" CssClass="btn btn-default" Text="Buscar Orden" runat="server" ID="btnBuscar2" OnClick="btnBuscar_Click"/>
+                                        </div>
+                                    </div>
+
+                                    <asp:GridView ID="gvOrdenesAbast" runat="server" DataKeyNames="id" autogeneratecolumns="false"
+                                        CssClass="col-sm-offset-1"
+                                        emptydatatext="No se encontraron ordenes."
+                                        OnSelectedIndexChanged="GridView_SelectedIndexChanged">
+                                        <columns>
+                                            <asp:boundfield datafield="codigo" headertext="Código" ReadOnly="true"/>
+                                            <asp:boundfield datafield="fecha" headertext="Fecha" ReadOnly="true"/>
+                                            <asp:boundfield datafield="encargado.nombreCompleto" headertext="Encargado" ReadOnly="true" ItemStyle-CssClass="text-right"/>
+                                            <asp:boundfield datafield="area.descripcion" headertext="Área" ReadOnly="true" ItemStyle-CssClass="text-right"/>
+                                            <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" />
+                                        </columns>
+                                    </asp:GridView>
+                                </div>
+                                <div id="buscarVentaPanel" runat="server">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">DNI Cliente:</label>
+                                        <div class="col-sm-4">
+                                            <asp:TextBox  CssClass="form-control" id="txtNumDoc" runat="server" placeholder="DNI Cliente" ></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Nombre Cliente:</label>
+                                        <div class="col-sm-4">
+                                            <asp:TextBox CssClass="form-control" id="txtNomCli" runat="server" placeholder="Nombre Cliente" ></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Fecha:</label>
+                                        <div class="col-sm-4">
+                                            <asp:TextBox CssClass="form-control datepicker" id="txtFecha" runat="server" placeholder="Fecha" ></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -134,7 +172,21 @@
                                             <asp:Button type="submit" CssClass="btn btn-default" Text="Buscar Orden" runat="server" ID="btnBuscar" OnClick="btnBuscar_Click"/>
                                         </div>
                                     </div>
+
+                                    <asp:GridView ID="gvOrdenes" runat="server" DataKeyNames="id" autogeneratecolumns="false"
+                                        CssClass="col-sm-offset-1"
+                                        emptydatatext="No se encontraron ordenes."
+                                        OnSelectedIndexChanged="GridView_SelectedIndexChanged">
+                                        <columns>
+                                            <asp:boundfield datafield="codigo" headertext="Código" ReadOnly="true"/>
+                                            <asp:boundfield datafield="fecha" headertext="Fecha" ReadOnly="true"/>
+                                            <asp:boundfield datafield="cliente.nombreCompleto" headertext="Cliente" ReadOnly="true" ItemStyle-CssClass="text-right"/>
+                                            <asp:boundfield datafield="cliente.num_documento" headertext="N° Doc. Cliente" ReadOnly="true" ItemStyle-CssClass="text-right"/>
+                                            <asp:CommandField ShowSelectButton="true" SelectText="Seleccionar" />
+                                        </columns>
+                                    </asp:GridView>
                                 </div>
+                                
                                 
                                 <div class="form-group">
                                     <div class="col-sm-offset-10 col-sm-2">
@@ -273,6 +325,15 @@
                     }
                 }
             }
+        });
+
+        $('.datepicker').datepicker({
+            language: 'es',
+            autoclose: true,
+            clearBtn: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy',
+            endDate: '+0d'
         });
     </script>
 </asp:Content>

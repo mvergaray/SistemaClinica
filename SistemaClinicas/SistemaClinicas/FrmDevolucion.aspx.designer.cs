@@ -85,6 +85,15 @@ namespace ComprobantesRetencion {
         protected global::System.Web.UI.WebControls.Button btnvalidar;
         
         /// <summary>
+        /// btnMostrarBusqueda control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMostrarBusqueda;
+        
+        /// <summary>
         /// infoPanel control.
         /// </summary>
         /// <remarks>
@@ -229,40 +238,94 @@ namespace ComprobantesRetencion {
         protected global::System.Web.UI.WebControls.Label lblMotivoError;
         
         /// <summary>
-        /// buscarOrdenPanel control.
+        /// buscarAbastecimientoPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl buscarOrdenPanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl buscarAbastecimientoPanel;
         
         /// <summary>
-        /// TextBox1 control.
+        /// txtArea control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtArea;
         
         /// <summary>
-        /// TextBox2 control.
+        /// txtEncargado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox txtEncargado;
         
         /// <summary>
-        /// TextBox3 control.
+        /// txtFecha2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.TextBox txtFecha2;
+        
+        /// <summary>
+        /// btnBuscar2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscar2;
+        
+        /// <summary>
+        /// gvOrdenesAbast control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvOrdenesAbast;
+        
+        /// <summary>
+        /// buscarVentaPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl buscarVentaPanel;
+        
+        /// <summary>
+        /// txtNumDoc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumDoc;
+        
+        /// <summary>
+        /// txtNomCli control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNomCli;
+        
+        /// <summary>
+        /// txtFecha control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFecha;
         
         /// <summary>
         /// btnBuscar control.
@@ -272,6 +335,15 @@ namespace ComprobantesRetencion {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBuscar;
+        
+        /// <summary>
+        /// gvOrdenes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvOrdenes;
         
         /// <summary>
         /// btnPreGenerar control.

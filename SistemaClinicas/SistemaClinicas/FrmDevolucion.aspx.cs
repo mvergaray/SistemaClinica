@@ -24,7 +24,6 @@ namespace ComprobantesRetencion
         
         private void limpiar(bool softClean = false)
         {
-            Session["searchType"] = "Venta";
             Session["ordenVenta"] = new BEOrdenDevolucion();
             Session["devolucion"] = new List<BEDetalleOrdenDevolucion>();
             Session["needApproval"] = false;
@@ -36,18 +35,28 @@ namespace ComprobantesRetencion
             Session["user"] = ordenCon.GetEmpleado(2);
             infoPanel.Visible = false;
             lblAprobarMsg.Visible = false;
+            lblNroOrdenMsg.Text = "";
             ventaPanel.Visible = false;
             abastecimientoPanel.Visible = false;
             ventaConfPanel.Visible = false;
             abastecimientoConfPanel.Visible = false;
             btnPreGenerar.Enabled = false;
+            txtNumDoc.Text = "";
+            txtNomCli.Text = "";
+            txtFecha.Text = "";
             txtMotivo.Text = "";
+            txtArea.Text = "";
+            txtEncargado.Text = "";
+            txtFecha2.Text = "";
             bxJefeFarmacia.Visible = false;
             bxAprobar.Visible = false;
+            buscarVentaPanel.Visible = false;
+            buscarAbastecimientoPanel.Visible = false;
 
             if (!softClean)
             {
                 txtNroOrden.Text = "";
+                Session["searchType"] = "Venta";
             }
         }
 
@@ -124,7 +133,70 @@ namespace ComprobantesRetencion
 
             return orden;
         }
-        
+
+        private void cargarDatosOrden(string codigo, int searchType)
+        {
+            BEOrdenDevolucion orden = GetOrdenxCodTipo(codigo, searchType);
+            if (orden != null && orden.id > 0)
+            {
+                if (orden.estado == "Entregado")
+                {
+                    infoPanel.Visible = true;
+                    btnPreGenerar.Enabled = true;
+                    var today = (DateTime.Now).Ticks;
+                    long diffTicks = today - orden.fecha.Ticks;
+                    string fechaHora = orden.fecha.ToShortDateString() + " - " + orden.fecha.ToShortTimeString();
+                    lblFechaConf.Text = lblFechaOrden.Text = fechaHora;
+                    lblNroOrden.Text = orden.codigo;
+                    if (searchType == 1)
+                    {
+                        ventaPanel.Visible = true;
+                        ventaConfPanel.Visible = true;
+                        lblClientConf.Text = lblNombreCliente.Text = orden.cliente.nombres + " " + orden.cliente.apellidos;
+                        lblDNIConf.Text = lblNumDocCliente.Text = orden.cliente.num_documento;
+                    }
+                    else
+                    {
+                        abastecimientoPanel.Visible = true;
+                        abastecimientoConfPanel.Visible = true;
+                        lblArea.Text = lblAreaConf.Text = orden.area.descripcion;
+                        lblEncargado.Text = lblEncargadoConf.Text = orden.encargado.nombre + " " + orden.encargado.apellidos;
+                    }
+
+                    Session["ordenVenta"] = orden;
+                    Session["devolucion"] = orden.detalle_orden;
+
+                    // Convertir diferencia a dias
+                    if (diffTicks / 864000000000 >= 2)
+                    {
+                        lblAprobarMsg.Visible = true;
+                        lblHourMsg.Text = "La orden tiene más de 48 horas desde su emisión. Se requerirá autorización.";
+                        BindDDL();
+                        bxJefeFarmacia.Visible = true;
+                        bxAprobar.Visible = true;
+                        Session["needApproval"] = true;
+                    }
+                    else
+                    {
+                        lblHourMsg.Text = "";
+                        Session["needApproval"] = false;
+                    }
+                }
+                else
+                {
+                    lblNroOrdenMsg.Text = "La orden ingresada no ha sido entregada aún.";
+                    infoPanel.Visible = false;
+                    btnPreGenerar.Enabled = false;
+                }
+            }
+            else
+            {
+                lblNroOrdenMsg.Text = "No se encontró la orden.";
+                infoPanel.Visible = false;
+                btnPreGenerar.Enabled = false;
+            }
+        }
+
         protected void btnvalidar_Click(object sender, EventArgs e)
         {
 
@@ -136,67 +208,7 @@ namespace ComprobantesRetencion
             if (txtNroOrden.Text != null && txtNroOrden.Text != "")
             {
                 lblNroOrdenMsg.Text = "";
-
-                BEOrdenDevolucion orden = GetOrdenxCodTipo(txtNroOrden.Text, searchType);
-
-                if (orden != null && orden.id > 0)
-                {
-                    if (orden.estado == "Entregado")
-                    {
-                        infoPanel.Visible = true;
-                        btnPreGenerar.Enabled = true;
-                        var today = (DateTime.Now).Ticks;
-                        long diffTicks = today - orden.fecha.Ticks;
-                        string fechaHora = orden.fecha.ToShortDateString() + " - " + orden.fecha.ToShortTimeString();
-                        lblFechaConf.Text = lblFechaOrden.Text = fechaHora;
-                        lblNroOrden.Text = orden.codigo;
-                        if (searchType == 1)
-                        {
-                            ventaPanel.Visible = true;
-                            ventaConfPanel.Visible = true;
-                            lblClientConf.Text = lblNombreCliente.Text = orden.cliente.nombres + " " + orden.cliente.apellidos;
-                            lblDNIConf.Text = lblNumDocCliente.Text = orden.cliente.num_documento;
-                        }
-                        else
-                        {
-                            abastecimientoPanel.Visible = true;
-                            abastecimientoConfPanel.Visible = true;
-                            lblArea.Text = lblAreaConf.Text = orden.area.descripcion;
-                            lblEncargado.Text = lblEncargadoConf.Text = orden.encargado.nombre + " " + orden.encargado.apellidos;
-                        }
-
-                        Session["ordenVenta"] = orden;
-                        Session["devolucion"] = orden.detalle_orden;
-
-                        // Convertir diferencia a dias
-                        if (diffTicks / 864000000000 >= 2)
-                        {
-                            lblAprobarMsg.Visible = true;
-                            lblHourMsg.Text = "La orden tiene más de 48 horas desde su emisión. Se requerirá autorización.";
-                            BindDDL();
-                            bxJefeFarmacia.Visible = true;
-                            bxAprobar.Visible = true;
-                            Session["needApproval"] = true;
-                        }
-                        else
-                        {
-                            lblHourMsg.Text = "";
-                            Session["needApproval"] = false;
-                        }
-                    }
-                    else
-                    {
-                        lblNroOrdenMsg.Text = "La orden ingresada no ha sido entregada aún.";
-                        infoPanel.Visible = false;
-                        btnPreGenerar.Enabled = false;
-                    }
-                }
-                else
-                {
-                    lblNroOrdenMsg.Text = "No se encontró la orden.";
-                    infoPanel.Visible = false;
-                    btnPreGenerar.Enabled = false;
-                }
+                cargarDatosOrden(txtNroOrden.Text, searchType);
             }
             else
             {
@@ -206,6 +218,24 @@ namespace ComprobantesRetencion
             }
         }
 
+        protected void btnMostrarBusqueda_Click(object sender, EventArgs e)
+        {
+            int searchType = rdTipoOrd.Text == "Venta" ? 1 : 2;
+            Session["searchType"] = searchType;
+            lblLastSearchCode.Text = txtNroOrden.Text;
+            limpiar(true);
+            if (searchType == 1)
+            {
+                buscarVentaPanel.Visible = true;
+                buscarAbastecimientoPanel.Visible = false;
+            }
+            else
+            {
+                buscarAbastecimientoPanel.Visible = true;
+                buscarVentaPanel.Visible = false;
+            }
+        }
+       
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
             BEOrdenDevolucion orden_devolucion =new BEOrdenDevolucion();
@@ -322,7 +352,59 @@ namespace ComprobantesRetencion
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            int searchType = int.Parse(Session["searchType"].ToString());
 
+            if (searchType == 1)
+            {
+                string nombre = txtNomCli.Text;
+                string numDoc = txtNumDoc.Text;
+                string fecha = txtFecha.Text;
+
+                List<BEOrden> result = ordenCon.BuscarOrden(numDoc, nombre, fecha);
+
+                gvOrdenes.DataSource = result;
+                gvOrdenes.DataBind();
+            }
+            else
+            {
+                string area = txtArea.Text;
+                string encargado = txtEncargado.Text;
+                string fecha = txtFecha2.Text;
+
+                List<BEOrden> result = ordenCon.BuscarOrdenAbastecimiento(area, encargado, fecha);
+
+                gvOrdenesAbast.DataSource = result;
+                gvOrdenesAbast.DataBind();
+            }
         }
+
+        protected void GridView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int searchType = int.Parse(Session["searchType"].ToString());
+            limpiar(true);
+
+            if (searchType == 1)
+            {
+                GridViewRow row = gvOrdenes.SelectedRow;
+                var codigo = row.Cells[0].Text;
+                lblLastSearchCode.Text = codigo;
+
+                cargarDatosOrden(codigo, searchType);
+                gvOrdenes.DataSource = null;
+                gvOrdenes.DataBind();
+            }
+            else
+            {
+                GridViewRow row = gvOrdenesAbast.SelectedRow;
+                var codigo = row.Cells[0].Text;
+                lblLastSearchCode.Text = codigo;
+
+                cargarDatosOrden(codigo, searchType);
+                gvOrdenesAbast.DataSource = null;
+                gvOrdenesAbast.DataBind();
+            }
+            
+        }
+
     }
 }

@@ -40,5 +40,14 @@ namespace Negocios
         {
             return empleadoDAO.GetEmpleadoxId(id);
         }
+
+        public List<BEOrden> BuscarOrden(string numDoc, string nombre, string fecha) {
+            return devolucionDAO.BuscarOrden(1, nombre, numDoc, "", "", fecha);
+        }
+
+        public List<BEOrden> BuscarOrdenAbastecimiento(string area, string encargado, string fecha)
+        {
+            return devolucionDAO.BuscarOrden(2, "", "", area, encargado, fecha);
+        }
     }
 }
