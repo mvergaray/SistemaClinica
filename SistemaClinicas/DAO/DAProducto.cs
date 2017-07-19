@@ -29,5 +29,15 @@ namespace DAO
 
             return result;
         }
+
+        public void ActualizarStock(int id, int cantidad)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.uspActualizarStockProducto");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@Id", SqlDbType.Int, 14).Value = id;
+            cmd.Parameters.Add("@Cantidad", SqlDbType.Int, 14).Value = cantidad;
+
+            UpdateCommand(cmd, 1);
+        }
     }
 }

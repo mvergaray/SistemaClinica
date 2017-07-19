@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAArea.cs" />
     <Compile Include="DACliente.cs" />
-    <Compile Include="DAOrden.cs" />
+    <Compile Include="DADetalleOrden.cs" />
+    <Compile Include="DAEmpleado.cs" />
+    <Compile Include="DADevolucion.cs" />
     <Compile Include="DAPreparado.cs" />
     <Compile Include="DAProducto.cs" />
     <Compile Include="Conexion.cs" />

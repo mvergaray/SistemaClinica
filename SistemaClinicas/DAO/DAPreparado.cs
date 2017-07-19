@@ -20,6 +20,7 @@ namespace DAO
             cmd.Parameters.Add("@Id", SqlDbType.Int, 14).Value = id;
 
             SqlDataReader reader = ExecuteReader(cmd, 1);
+
             while (reader.Read())
             {
                 result.id = ((!reader[0].Equals(DBNull.Value)) ? reader.GetInt32(0) : -1);
@@ -29,6 +30,16 @@ namespace DAO
 
 
             return result;
+        }
+
+        public void ActualizarStock(int id, int cantidad)
+        {
+            SqlCommand cmd = new SqlCommand("dbo.uspActualizarStockPreparado");
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@Id", SqlDbType.Int, 14).Value = id;
+            cmd.Parameters.Add("@Cantidad", SqlDbType.Int, 14).Value = cantidad;
+
+            UpdateCommand(cmd, 1);
         }
     }
 }

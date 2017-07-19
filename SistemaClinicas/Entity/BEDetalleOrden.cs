@@ -1,5 +1,4 @@
-﻿using Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +16,8 @@ namespace Entity
         public string codigo { get; set; }
         public int cantidad { get; set; }
         public double monto { get; set; }
-        public int cant_devolver { get; set; }
+        public string descripcionGen { get; set; }
+        public string codigoProdGen { get; set; }
         public BEDetalleOrden()
         {
 

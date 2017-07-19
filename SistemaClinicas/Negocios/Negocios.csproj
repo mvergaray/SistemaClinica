@@ -40,8 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions.cs" />
-    <Compile Include="BLOrden.cs" />
-    <Compile Include="BLProducto.cs" />
+    <Compile Include="BLDevolucion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

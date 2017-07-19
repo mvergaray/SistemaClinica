@@ -39,10 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BEArea.cs" />
     <Compile Include="BECliente.cs" />
     <Compile Include="BEDetalleOrden.cs" />
+    <Compile Include="BEDetalleOrdenDevolucion.cs" />
     <Compile Include="BEDetallePreparado.cs" />
-    <Compile Include="BEOrdenes.cs" />
+    <Compile Include="BEEmpleados.cs" />
+    <Compile Include="BEOrden.cs" />
+    <Compile Include="BEOrdenDevolucion.cs" />
     <Compile Include="BEPreparados.cs" />
     <Compile Include="BEProductos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

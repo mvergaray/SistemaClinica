@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 namespace Entity
 {
     [Serializable]
-    public class BEPreparados
+    public class BEArea
     {
         public int id { get; set; }
         public string codigo { get; set; }
-        public string nombre { get; set; }
-        public string instrucciones { get; set; }
-        public int id_empleado { get; set; }
-        public int stock { get; set; }
-        public BEPreparados()
+        public string descripcion { get; set; }
+
+        public BEArea()
         {
 
         }
