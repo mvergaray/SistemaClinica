@@ -16,6 +16,7 @@ namespace ComprobantesRetencion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            log4net.ThreadContext.Properties["transactionid"] = Guid.NewGuid().ToString();
             if (!Page.IsPostBack)
             {
                 limpiar();
@@ -67,7 +68,7 @@ namespace ComprobantesRetencion
             string email = jefe.email;
             string body = "Estimado/a " + jefe.nombre + " " + jefe.apellidos + ", <br/>"+
                 "Se envía notificación informando que tiene una orden de devolución pendiente de aprobación. <br/>" +
-                "Orden código: " + codigoOrden + "<br/>" +
+                "Código de Orden: " + codigoOrden + "<br/>" +
                 "Por favor, ingresar al sistema para realizar las acciones necesarias.";
             if (String.IsNullOrEmpty(email))
                 return;

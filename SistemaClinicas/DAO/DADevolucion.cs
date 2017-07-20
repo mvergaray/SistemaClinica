@@ -110,13 +110,15 @@ namespace DAO
             {
                 cmd.Parameters.Add("@Nombre", SqlDbType.VarChar, 500).Value = nombre;
                 cmd.Parameters.Add("@Num_doc", SqlDbType.VarChar, 50).Value = num_doc;
-                cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fecha;
+                if (fecha != null && fecha != "")
+                    cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fecha;
             }
             else
             {
                 cmd.Parameters.Add("@Area", SqlDbType.VarChar, 500).Value = area;
                 cmd.Parameters.Add("@Responsable", SqlDbType.VarChar, 500).Value = responsable;
-                cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fecha;
+                if (fecha != null && fecha != "")
+                    cmd.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = fecha;
             }
             
 
